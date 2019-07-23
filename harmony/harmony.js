@@ -36,9 +36,14 @@ module.exports = function(RED) {
             }
 
             if (!action) {
-                node.send({
-                    payload: false
-                });
+                if (config.append) {
+                    msg.payload = false;
+                    node.send(msg);
+                } else {
+                    node.send({
+                        payload: false
+                    });
+                }
             } else {
                 node.server.hub.sendCommand(action, node.hold, node.repeat, node.delay)
                     .then(() => {
@@ -221,4 +226,46 @@ module.exports = function(RED) {
         });
     }
     RED.nodes.registerType('HWS activities', HarmonyActivities);
+
+    function HarmonyDevices(config) {
+        var node = this;
+        RED.nodes.createNode(this, config);
+
+        node.server = RED.nodes.getNode(config.server);
+
+        if (!node.server) return;
+
+        node.on('input', msg => {
+            node.server.hub.getDevices()
+                .then(devices => {
+                    var sanitizedDevices = devices
+                        .map(device => {
+                            var d = device;
+                            d.commands = d.commands
+                                .map(command => {
+                                    var c = command;
+                                    var action = JSON.parse(command.action);
+                                    Object.assign(c, action);
+                                    delete c.action;
+                                    return c;
+                                });
+                            return d;
+                        });
+                    if (config.append) {
+                        msg.payload = {
+                            devices: sanitizedDevices
+                        };
+                        node.send(msg);
+                    } else {
+                        node.send({
+                            payload: {
+                                devices: sanitizedDevices
+                            },
+                            devices: sanitizedDevices
+                        });
+                    }
+                })
+        });
+    }
+    RED.nodes.registerType('HWS devices', HarmonyDevices);
 }

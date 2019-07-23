@@ -480,3 +480,52 @@
     });
 </script>
 <!-- End HWS activities -->
+
+<!-- Begin HWS Devices -->
+<script type="text/x-red" data-template-name="HWS devices">
+    <div class="form-row">
+        <label for="node-input-server"><i class="fa fa-server"></i> Hub</label>
+        <input type="text" id="node-input-server">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-append"><i class="fa fa-plus"></i> Append</label>
+        <input type="checkbox" id="node-input-append"> msg.payload
+    </div>
+</script>
+<script type="text/x-red" data-help-name="HWS devices">
+    <p>A node to retrieve a list of available devices for a given Harmony Hub through Node-RED</p>
+    <p>
+    A Harmony <i class="fa fa-server" /> <b>Hub</b> needs to be selected from the list or created by clicking on the edit button, which opens the configuration node. The
+    <b>IP</b> addresses of available Harmony Hubs will be autodetected, or can be entered manually in the configuration node.
+    </p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('HWS devices', {
+        category: 'harmony',
+        color: '#a6bbcf',
+        defaults: {
+            name: {
+                value: ''
+            },
+            server: {
+                type: 'harmonyws-server',
+                required: true
+            },
+            append: {
+                value: false
+            }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: 'feed.png',
+        label: function() {
+            return this.name || 'HWS devices';
+        }
+    });
+</script>
+<!-- End HWS devices -->
