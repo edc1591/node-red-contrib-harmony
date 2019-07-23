@@ -1,7 +1,7 @@
 # Harmony Hub Websocket Integration for Node-RED
 
-[![npm](https://img.shields.io/npm/v/node-red-contrib-harmony-websocket/latest.svg)](https://www.npmjs.com/package/node-red-contrib-harmony-websocket)	 
-[![npm package](https://img.shields.io/npm/dm/node-red-contrib-harmony-websocket.svg)](https://www.npmjs.com/package/node-red-contrib-harmony-websocket)
+[![npm](https://img.shields.io/npm/v/node-red-contrib-harmony-websocket-fork/latest.svg)](https://www.npmjs.com/package/node-red-contrib-harmony-websocket-fork)	 
+[![npm package](https://img.shields.io/npm/dm/node-red-contrib-harmony-websocket-fork.svg)](https://www.npmjs.com/package/node-red-contrib-harmony-websocket-fork)
 
 **Workaround for firmware update 4.15.206**
 
@@ -23,7 +23,7 @@ In the terminal open the user data directory `˜/.node-red` and install the pack
 
 ```
 cd ˜/.node-red
-npm install node-red-contrib-harmony-websocket
+npm install node-red-contrib-harmony-websocket-fork
 ```
 
 Then run or restart Node-RED
@@ -35,7 +35,7 @@ Open your Node-RED instance, typically under <http://localhost:1880>, and you sh
 
 ### Install via Node-RED
 
-You can install the extension simply in Node-RED in your browser, by default under <http://localhost:1880>. Click on the *Menu* button (sandwich icon) in the upper right corner. In the menu click **Manage palette**. In the side-panel that opens on the left click on the tab **Install**. In the search field enter *harmony*, in the result list a *node-red-contrib-harmony-websocket* card will appear. Click on the **install** button on this card, and you are done. You should now find the new nodes available in the palette in the group **harmony**.
+You can install the extension simply in Node-RED in your browser, by default under <http://localhost:1880>. Click on the *Menu* button (sandwich icon) in the upper right corner. In the menu click **Manage palette**. In the side-panel that opens on the left click on the tab **Install**. In the search field enter *harmony*, in the result list a *node-red-contrib-harmony-websocket-fork* card will appear. Click on the **install** button on this card, and you are done. You should now find the new nodes available in the palette in the group **harmony**.
 
 ## Usage / Available nodes
 
