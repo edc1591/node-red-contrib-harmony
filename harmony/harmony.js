@@ -157,4 +157,46 @@ module.exports = function(RED) {
         }, 5000);
     }
     RED.nodes.registerType('HWS observe', HarmonyObserve);
+
+    function HarmonyActivities(config) {
+        var node = this;
+        RED.nodes.createNode(this, config);
+
+        node.server = RED.nodes.getNode(config.server);
+
+        if (!node.server) return;
+
+        node.on('input', msg => {
+            node.server.hub.getActivities()
+                .then(activities => {
+                    var sanitizedActivities = activities
+                        .map(activity => {
+                            var a = activity;
+                            a.commands = a.commands
+                                .map(command => {
+                                    var c = command;
+                                    var action = JSON.parse(command.action);
+                                    Object.assign(c, action);
+                                    delete c.action;
+                                    return c;
+                                });
+                            return a;
+                        });
+                    if (config.append) {
+                        msg.payload = {
+                            activities: sanitizedActivities
+                        };
+                        node.send(msg);
+                    } else {
+                        node.send({
+                            payload: {
+                                activities: sanitizedActivities
+                            },
+                            activities: sanitizedActivities
+                        });
+                    }
+                })
+        });
+    }
+    RED.nodes.registerType('HWS activities', HarmonyActivities);
 }
