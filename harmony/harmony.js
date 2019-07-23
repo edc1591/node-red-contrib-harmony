@@ -42,14 +42,24 @@ module.exports = function(RED) {
             } else {
                 node.server.hub.sendCommand(action, node.hold, node.repeat, node.delay)
                     .then(() => {
-                        node.send({
-                            payload: action
-                        });
+                        if (config.append) {
+                            msg.payload = action;
+                            node.send(msg);
+                        } else {
+                            node.send({
+                                payload: action
+                            });
+                        }
                     })
                     .catch(err => {
-                        node.send({
-                            payload: false
-                        });
+                        if (config.append) {
+                            msg.payload = false;
+                            node.send(msg);
+                        } else {
+                            node.send({
+                                payload: false
+                            });
+                        }
                         if (debug) console.log('Error: ' + err);
                     });
             }
@@ -107,17 +117,29 @@ module.exports = function(RED) {
                     if (!res.code || res.code != 200) {
                         throw new Error();
                     }
-                    node.send({
-                        payload: {
+                    if (config.append) {
+                        msg.payload = {
+                                activity: id
+                        };
+                        node.send(msg);
+                    } else {
+                        node.send({
+                            payload: {
+                                activity: id
+                            },
                             activity: id
-                        },
-                        activity: id
-                    });
+                        });
+                    }
                 })
                 .catch(err => {
-                    node.send({
-                        payload: false
-                    });
+                    if (config.append) {
+                        msg.payload = false;
+                        node.send(msg);
+                    } else {
+                        node.send({
+                            payload: false
+                        });
+                    }
                     if (debug) console.log('Error: ' + err);
                 });
         });

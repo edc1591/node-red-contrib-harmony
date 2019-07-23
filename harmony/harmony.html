@@ -39,6 +39,10 @@
         <label for="node-input-delay"><i class="fa fa-hourglass-start"></i> Delay</label>
         <input type="text" id="node-input-delay">
     </div>
+    <div class="form-row">
+        <label for="node-input-append"><i class="fa fa-plus"></i> Append</label>
+        <input type="checkbox" id="node-input-append"> msg.payload
+    </div>
 </div>
 </script>
 <script type="text/x-red" data-help-name="HWS command">
@@ -103,6 +107,9 @@
                 validate: function(value) {
                     return value > -1;
                 }
+            },
+            append: {
+                value: false
             }
         },
         inputs: 1,
@@ -254,6 +261,10 @@
             <select id="node-input-activity" style="width: 100%;"></select>
         </div>
     </div>
+    <div class="form-row">
+        <label for="node-input-append"><i class="fa fa-plus"></i> Append</label>
+        <input type="checkbox" id="node-input-append"> msg.payload
+    </div>
 </script>
 <script type="text/x-red" data-help-name="HWS activity">
     <p>A node to start an <b>Activity</b> on a Harmony Hub through Node-RED.</p>
@@ -290,6 +301,9 @@
             },
             activity: {
                 value: ''
+            },
+            append: {
+                value: false
             }
         },
         inputs: 1,
