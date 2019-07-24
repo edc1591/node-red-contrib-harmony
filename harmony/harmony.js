@@ -22,6 +22,7 @@ module.exports = function(RED) {
             try {
 
                 var [type, id, command] = decodeURI(node.command).split(':');
+                var activity = id || node.activity;
 
                 if (msg.payload.command) {
                     command = msg.payload.command;
@@ -29,7 +30,13 @@ module.exports = function(RED) {
                     command = msg.command;
                 }
 
-                var action = node.server.hub.getAction(id || node.activity, command);
+                if (msg.payload.activity) {
+                    activity = msg.payload.activity;
+                } else if (msg.activity) {
+                    activity = msg.activity;
+                }
+
+                var action = node.server.hub.getAction(activity, command);
 
             } catch (err) {
                 if (debug) console.log('Error: ' + err);
